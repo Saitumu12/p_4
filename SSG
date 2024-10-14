@@ -1,0 +1,25 @@
+
+export async function getStaticProps() {
+  const res = await fetch('http://localhost:3000/api/data');
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 10, // Revalidate every 10 seconds
+  };
+}
+
+export default function Home({ data }) {
+  return (
+    <div>
+      <h1>Static Site Generation with Next.js</h1>
+      <ul>
+        {data.map((item) => (
+          <li key={item._id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
